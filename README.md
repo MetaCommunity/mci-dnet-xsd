@@ -47,6 +47,13 @@ single outline. There should be at least three sets of classes listed:_
 * _Faceted protocol classes_ (`faceted-class`)
 * _Simple type classes_ (`simple-type-class`)
 
+_Additional focus should be made about the set of numeric types
+defined in XML Schema Data types. Seperately, a note should be made
+with regards to enumerable simple types in XSD__
+
+_Application Note: XML schema data types find a relevance in encoding
+of XML schemas, and furthermore in RDF XML_
+
 _Architectural Note: This system should endeavor to extend of the
 metaobject protocol, in implementation of XML schema data types._
 
