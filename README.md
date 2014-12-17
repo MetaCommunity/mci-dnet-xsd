@@ -19,12 +19,12 @@ subsequently revised as the set of projects organized under the
 This system implements a facet-oriented view of XML Schema simple data
 types.
 
-Facets in terms of XML schema syntax:
+Fundemtnal Facets in terms of XML schema syntax:
 
 * **cardinality:** finite | countably infinite
 * **numeric:** true | false
-* **order:** partial | total
 * **bounded:** true | false
+* **ordered:** partial | total | (false?)
 
 This sytem defines a number of protocol classes for purpose of
 representing those facets of XML schema simple data types. Those
@@ -45,6 +45,22 @@ single outline. There should be at least three sets of classes listed:_
 
 * _Protocol classes_ (`protocol-class`)
 * _Faceted protocol classes_ (`faceted-class`)
+    * Relevance: _Fundamental facets_ of XML Schema data types
+    * Facet: 'cardinality' 
+        * finite: `finite-type` 
+        * countably infinite: `countably-infinite-type`
+    * Facet: 'numeric'
+        * true: `numeric-type`
+        * false: `non-numeric-type`
+    * Facet: 'bounded'
+        * 
+    * Facet: 'ordered'
+        * `ordered-type` (protocol class)
+            * partial: `partially-ordered-type`
+            * total: `ordinal-type`
+        * false: `non-ordered-type`
+
+
 * _Simple type classes_ (`simple-type-class`)
 
 _Additional focus should be made about the set of numeric types
