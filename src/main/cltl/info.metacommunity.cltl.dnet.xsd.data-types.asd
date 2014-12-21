@@ -16,7 +16,7 @@
   :homepage "https://github.com/MetaCommunity/mci-dnet-xsd"
   :license "https://github.com/MetaCommunity/mci-dnet-xsd/blob/master/LICENSE"
   :depends-on (#:info.metacommunity.cltl.dnet.uri
-               #+NIL #:info.metacommunity.cltl.utils)
+               #:info.metacommunity.cltl.utils)
   :components 
   ((:file "xsd-types-package")
    #+NIL 
