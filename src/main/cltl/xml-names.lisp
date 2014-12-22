@@ -131,6 +131,9 @@
 (deftype ncname ()
   '(and rod (satisfies ncname-p)))
 
+(deftype simple-ncname ()
+  '(and rod (satisfies ncname-p)))
+
 (defun nmtoken-p (name)
   (declare (type rod name)
            (inline nmtoken-char-p)
@@ -147,6 +150,9 @@
 
 (deftype nmtoken ()
   '(and rod (satisfies nmtoken-p)))
+
+(deftype simple-nmtoken ()
+  '(and simple-rod (satisfies nmtoken-p)))
 
 
 (defun qname-p (name)
@@ -196,3 +202,7 @@
 
 (deftype qname ()
   '(and rod (satisfies qname-p)))
+
+(deftype simple-qname ()
+  '(and simple-rod (satisfies qname-p)))
+

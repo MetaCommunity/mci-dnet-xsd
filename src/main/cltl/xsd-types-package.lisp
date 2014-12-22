@@ -10,10 +10,13 @@
   (:export
    #:ncname-p
    #:ncname
+   #:simple-ncname
    #:nmtoken-p
    #:nmtoken
+   #:simple-nmtoken
    #:qname-p
    #:qname
+   #:simple-qname
    ))
 
 
