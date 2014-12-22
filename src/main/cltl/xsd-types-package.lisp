@@ -5,6 +5,7 @@
 (defpackage  #:info.metacommunity.cltl.dnet.xsd.data-types
   (:nicknames #:dnet.xsd.data-types)
   (:use #:info.metacommunity.cltl.utils
+        #:info.metacommunity.cltl.dnet.uri
         #:runes
         #:cl)
   (:export
