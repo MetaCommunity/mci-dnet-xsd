@@ -16,9 +16,16 @@
   :homepage "https://github.com/MetaCommunity/mci-dnet-xsd"
   :license "https://github.com/MetaCommunity/mci-dnet-xsd/blob/master/LICENSE"
   :depends-on (#:info.metacommunity.cltl.dnet.uri
-               #:info.metacommunity.cltl.utils)
+               #:info.metacommunity.cltl.utils
+               #:closure-common)
+  ;; NB: Due to the direct dependency onto #:closure-common, this
+  ;; system also depends indirectly onto #:trivial-gray-strams (#-scl) 
+  ;; and #:babel (#+rune-is-character)
   :components 
   ((:file "xsd-types-package")
+   (:file "xml-names"
+          :depends-on ("xsd-types-package")
+          )
    #+NIL 
    (:file ""
           :depends-on ("xsd-types-package"))

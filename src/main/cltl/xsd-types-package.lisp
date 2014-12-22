@@ -4,4 +4,6 @@
 
 (defpackage  #:info.metacommunity.cltl.dnet.xsd.data-types
   (:nicknames #:dnet.xsd.data-types)
-  (:use #:info.metacommunity.cltl.utils #:cl))
+  (:use #:info.metacommunity.cltl.utils
+        #:runes
+        #:cl))
