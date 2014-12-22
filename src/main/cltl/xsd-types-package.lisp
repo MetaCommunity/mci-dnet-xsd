@@ -6,4 +6,14 @@
   (:nicknames #:dnet.xsd.data-types)
   (:use #:info.metacommunity.cltl.utils
         #:runes
-        #:cl))
+        #:cl)
+  (:export
+   #:ncname-p
+   #:ncname
+   #:nmtoken-p
+   #:nmtoken
+   #:qname-p
+   #:qname
+   ))
+
+
