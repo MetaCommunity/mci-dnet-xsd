@@ -3,6 +3,24 @@ mci-dnet-xsd - Implementation of XML Schema Data types
 
 ## Overview
 
+### Dependencies
+
+* `info.metacommunity.cltl.utils`
+* `closer-common`
+
+### XML Names Dictionary
+
+* Function `NCNAME-P`
+* Function `NMTOKEN-P`
+* Function `QNAME-P`
+* Type `NCNAME`
+* Type `SIMPLE-NCNAME`
+* Type `NMTOKEN`
+* Type `SIMPLE-NMTOKEN`
+* Type `QNAME`
+* Type `SIMPLE-QNAME`
+
+
 ### Historic Context: Project Lupine
 
 This project represents an effective descendant of a feature of a
