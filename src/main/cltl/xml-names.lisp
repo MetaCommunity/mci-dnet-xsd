@@ -46,7 +46,7 @@
            (inline ccode <= =)
            (values boolean))
   (let ((%c (ccode c)))
-    (declare (type character-code %c))
+    (declare (type ccode %c))
     (or  (ccode-in-range %c #\a #\z)
          (ccode-in-range %c #\A #\Z)
          (= %c #.(char-code #\_))
@@ -71,7 +71,7 @@
            (inline ccode <= =)
            (values boolean))
   (let ((%c (ccode c)))
-    (declare (type character-code %c))
+    (declare (type ccode %c))
     (or  (ccode-in-range %c #\a #\z)
          (ccode-in-range %c #\A #\Z)
          (= %c #.(char-code #\-))
@@ -105,28 +105,64 @@
     (or (ncname-char-p %c)
         (= %c #.(char-code #\:)))))
 
+
+(define-condition syntax-error (error)
+  ((source
+    :initarg :source
+    :initform nil
+    :reader syntax-error-source)
+   (source-position
+    :initarg :source-position
+    :initform nil
+    :reader syntax-error-source-position)
+   (constraint
+    :initarg :constraint
+    :reader syntax-error-constraint))
+  (:report
+   (lambda (c s)
+     (format s "~<Failed syntax constraint [~A]~>~
+~<~@[ at position ~S~]~@[ in ~S~]~>"
+             (let ((spec (syntax-error-constraint c)))
+               (typecase spec
+                 (function (function-name spec))
+                 (t spec)))
+             (syntax-error-source-position c)
+             (syntax-error-source c)
+             ))))
+
+
     
 (defun ncname-p (name)
+  ;; FIXME: Sufficient for validating a sting, 
+  ;; but not sufficient for validating an input stream
   (declare (type rod name)
            (inline ncname-start-char-p ncname-char-p)
            (values boolean))
-  (let ((len (length name)))
-    (declare (type array-dimension-designator len))
-    (and (not (zerop len))
-         (ncname-start-char-p (rune name 0))
-         (dotimes (index (1- len) t)
-           (let ((c (rune-code (rune name (1+ index)))))
-             (unless (ncname-char-p c)
-               (return nil)))))))
+  (macrolet ((validate (form constraint &optional position)
+               `(unless ,form
+                  (error 'syntax-error
+                         :source name
+                         :constraint ,constraint
+                         ,@(when position 
+                                 `(:source-position ,position))))))
+    (let ((len (length name)))
+      (declare (type array-dimension-designator len))
+      (validate (not (zerop len)) "Length not ZEROP") ;; FIXME: I18N
+      (validate (ncname-start-char-p (rune name 0))
+                #'ncname-start-char-p 0)
+      (dotimes (index (1- len) t)
+        (let ((c (rune-code (rune name (1+ index)))))
+          (validate (ncname-char-p c)
+                    #'ncname-char-p (1+ index)))))))
 
 ;; (ncname-p "foo")
 ;; => T
 ;; (ncname-p ":foo")
-;; => NIL
+;; --> SYNTAX-ERROR
 ;; (ncname-p "xs:foo")
-;; => NIL
+;; --> SYNTAX-ERROR
 ;; (ncname-p "")
-;; => NIL
+;; --> SYNTAX-ERROR
 
 (deftype ncname ()
   '(and rod (satisfies ncname-p)))
@@ -138,14 +174,30 @@
   (declare (type rod name)
            (inline nmtoken-char-p)
            (values boolean))
-  (and (not (zerop (the array-dimension-designator
-                        (length name))))
-       (every #'nmtoken-char-p name)))
+  (macrolet ((validate (form constraint &optional position)
+               `(unless ,form
+                  (error 'syntax-error
+                         :source name
+                         :constraint ,constraint
+                         ,@(when position 
+                                 `(:source-position ,position))))))
+    (let ((len  (length name)))
+    (validate (not (zerop (the array-dimension-designator
+                               len)))
+              "Length not ZEROP") ;; FIXME: I18N
+    (dotimes (index len t)
+      (let ((c (rune-code (rune name index))))
+        (validate (nmtoken-char-p c)
+                  #'nmtoken-char-p index))))))
 
 ;; (nmtoken-p "")
-;; => NIL
+;; --> error
+;;
 ;; (nmtoken-p "a:b:c")
 ;; => T
+;;
+;; (nmtoken-p "a!b")
+;; --> error
 
 
 (deftype nmtoken ()
@@ -159,42 +211,46 @@
   (declare (type rod name)
            (inline ncname-start-char-p ncname-char-p)
            (values boolean))
-  (let ((len (length name))
-        second-ncname-p)
-    (declare (type array-dimension-designator len)
-             (type boolean second-ncname-p))
-    (labels ((validate-ncname (offset)
-               (and  (not (= offset len))
-                     (ncname-start-char-p (rune name offset))
-                     (dotimes (index (- len offset 1) t)
-                       (let ((c (rune-code (rune name (+ index offset 1)))))
-                         (unless (ncname-char-p c)
-                           (return nil)))))))
-
-    (and (not (zerop len))
-         (ncname-start-char-p (rune name 0))
-         (dotimes (index len t)
-           (declare (type array-dimension-designator index))
-           (let ((c (rune-code (rune name index))))
-             (cond
-               ((= c #.(char-code #\:))
-                (cond
-                  ((zerop index) (return nil))
-                  (t ;; parse second ncname
-                   (cond ((validate-ncname (1+ index))
-                          (return t))
-                         (t (return nil))))))
-                (t (unless (ncname-char-p c)
-                     (return nil))))))))))
+  (macrolet ((validate (form constraint &optional position)
+               `(unless ,form
+                  (error 'syntax-error
+                         :source name
+                         :constraint ,constraint
+                         ,@(when position 
+                                 `(:source-position ,position))))))
+    (let ((len (length name)))
+      (declare (type array-dimension-designator len))
+      (labels ((validate-ncname-2 (offset)
+                 (validate (not (= offset len))
+                           #'ncname-char-p offset)
+                 (validate (ncname-start-char-p (rune name offset))
+                           ncname-start-char-p offset)
+                 (dotimes (index (- len offset 1) t)
+                   (let* ((off (+ index offset 1))
+                          (c (rune-code (rune name off))))
+                     (validate (ncname-char-p c)
+                               #'ncname-char-p off)))))
+        (validate (not (zerop len)) "Length not ZEROP") ;; FIXME: I18N
+        (validate (ncname-start-char-p (rune name 0))
+                #'ncname-start-char-p 0)
+        (dotimes (index len t)
+          (declare (type array-dimension-designator index))
+          (let ((c (rune-code (rune name index))))
+            (cond
+              ((= c #.(char-code #\:))
+               ;; parse second ncname
+               (validate-ncname-2 (1+ index)))
+              (t (validate (ncname-char-p c)
+                           #'ncname-char-p index)))))))))
 
 ;; (qname-p "xs:foo")
 ;; => T
 
 ;; (qname-p "xs:")
-;; => NIL
+;; --> syntax-error
 
 ;; (qname-p ":foo")
-;; => NIL
+;; --> syntax-error
 
 ;; (qname-p "foo")
 ;; => T
@@ -206,3 +262,16 @@
 (deftype simple-qname ()
   '(and simple-rod (satisfies qname-p)))
 
+
+;;; % QName resolution
+
+#+NIL ;; TO DO
+(defclass namespace-context ()
+  ())
+
+
+#+NIL ;; TO DO
+(defun resolve-qname (name)
+  (declare (type qname name))
+  
+  )

@@ -8,6 +8,13 @@
         #:runes
         #:cl)
   (:export
+   #:ncname-start-char-p
+   #:ncname-char-p
+   #:nmtoken-char-p
+   #:syntax-error
+   #:syntax-error-source
+   #:syntax-error-source-position
+   #:syntax-error-constraint
    #:ncname-p
    #:ncname
    #:simple-ncname
