@@ -20,6 +20,47 @@ mci-dnet-xsd - Implementation of XML Schema Data types
 * Type `QNAME`
 * Type `SIMPLE-QNAME`
 
+### XML Namespaces
+
+The XML Schema 1.1 abstract data model
+[[XSD 1.1 part 1][XSD11-1]][[XSD 1.1 part 2][XSD11-2]]
+allows for schema authors to apply XML namespaces
+[[XML-NAMES][xml-names]] within definitions of XML Schema
+structures and XML Schema data types. Similarly, the DOM Level 2 
+[[DOM2C][DOM2]] and DOM Level 3 [[DOM3C][DOM3C]] _core_ specifications
+permit for a URI value to be provided, when querying a _named node
+map_. In any regards, the namespace of an XML element may be
+considered relevant to applications in processing of _well formed_ XML 
+infosets [[XML Infoset][XML-Infoset]].
+
+In a context of qualified names within XML documents: When a namespace
+is declared within an XML element, that namespace remains _in scope_ 
+for its declaration in that XML element -- whether the namespace is
+declared as a default namespace or as a qualified namespace --
+remaining _in scope_ until either the namespace declaration is
+shadowed by a _similar_ namespace declaration within a contained
+element, or until the end of the element's tag body. In a context of
+XML documents, an XML element effectively is a container for namespace
+declarations. 
+
+In a context of _target namespaces_ within XML schema structures
+\[[XSD 1.1 part 1][XSD11-1]\] and XML schema data types
+\[[XSD 1.1 part 2][XSD11-2]\], the _targetNamespace_ attribute may be
+specified in a definition, such as to denote the namespace for an
+element, attribute, or other information item defined in the
+definition.
+
+If the _targetNamespace_ of an element _D1_ must be referenced by way
+of a _QName_ value within an element _D2_, then the
+_targetNamespace_of _D1_ must be bound to a _namespace prefix_ by way
+of an appropriate _xmlns_ attribute within a context of
+_D2_. Although this is not expressly stated within the specification
+for XML schema structures [[XSD 1.1 part 1][XSD11-1]], but this
+requirement would be consistent with the nature of XML namespace
+declarations [[XML-NAMES][xml-names]], such that would provide a
+consistent mechanism for defining a _namespace prefix_ to a _namespace
+URI_.
+
 
 ### Historic Context: Project Lupine
 
@@ -134,3 +175,11 @@ _Incomplete Oultline_ (TO DO: Reference original Cubetto UML model)
 ### Implementation of XML Schema Complex Data Types
 
 (TO DO, cf. CXML, Klacks, Sax, XML DOM, and MOP)
+
+
+[XSD11-1]: http://www.w3.org/TR/xmlschema11-1/
+[XSD11-2]: http://www.w3.org/TR/xmlschema11-2/
+[XML-NAMES]: http://www.w3.org/TR/REC-xml-names/
+[DOM2C]: http://www.w3.org/TR/2000/REC-DOM-Level-2-Core-20001113/
+[DOM3C]: http://www.w3.org/TR/2004/REC-DOM-Level-3-Core-20040407/
+[XML-Infoset]: http://www.w3.org/TR/xml-infoset/
