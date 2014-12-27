@@ -3,6 +3,26 @@ mci-dnet-xsd - Implementation of XML Schema Data types
 
 ## Overview
 
+### Introduction
+
+* XML
+* XML Schema Documents (XSD)
+* Other Types of Schema for XML
+    * DTDs - Subset of original SGML DTD expression languag
+    * RELAX NG - XML or Compact Syntax
+    * ...
+
+#### Usage Cases
+
+* **Complex Types in XSD** - Transform XML Schema Definitions for
+  [XMI](http://www.omg.org/spec/XMI/) into Common Lisp Class
+  Definitions, towards implementaion of an XMI serialization framework
+  for an implementation of the Metaobject Framework (MOF), Unified
+  Modeling Language(UML), Systems Modeling Langauge (SysML), ODM, and
+  other standard metamodels, in Common Lisp 
+* **Simple Types in XSD** - Support definition of XSD simple types for
+  application in RDF graph files
+
 ### Dependencies
 
 * `info.metacommunity.cltl.utils`
