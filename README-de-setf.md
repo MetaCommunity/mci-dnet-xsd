@@ -50,9 +50,9 @@
 
             * The pathname resolution conventions applied in the
               _hierarchical pathnames_ extension would essentially
-              require that each version-controled _source tree_ would
+              require that each version-controlled _source tree_ would
               be _published_ within the local _filesystem_, in a
-              manner specially as to be accessible to the _hierarhical
+              manner specially as to be accessible to the _hierarchical
               pathnames_ extension, external to the original _source
               tree_. Although this can be resolved relatively easily
               on most UNIX-like systems -- such as in using the `ln`
@@ -83,15 +83,15 @@
                `asdf::sysdef-hierarchical-search-function`
                
         * Of course, the previous _ad hoc_ methodology might be
-          managed with a simple function `reigster-foo`,
+          managed with a simple function `register-foo`,
           provided a `{ROOT}` defined within the lexical environment
           of the same function. Some concerns, however:
           
             * The matter of _symbolic linking_ might provide some
-              obstacles insofar as _poratbility_ of the methodology.
+              obstacles insofar as _portability_ of the methodology.
 
             * There may be a concern as with regards to
-              _sychronization_ between the source tree `A.B.C/` and
+              _synchronization_ between the source tree `A.B.C/` and
               the subdirectories of `{ROOT}/A/B/C/`
 
         * Alternate to the previous _ad hoc_ methodology: A function
@@ -99,11 +99,11 @@
           system definitions within the directory `A.B.C/` and its
           subdirectories, and would register each system for its
           appropriate name, within `asdf:*source-registry*`. If -- in
-          that methdology -- if there might be some concerns as with
+          that methodology -- if there might be some concerns as with
           regards to when a system `A.B.C.D` would be defined in a
           file named `D.asd` rather than `A.B.C.D.asd` ... then,
           candidly, it may still be no more of a _commercially
-          reusnable_ methdology, no more than to sell potatoes for
+          reusable_ methodology, no more than to sell potatoes for
           paperweights.
 
         * A third methodology may be developed -- albeit again, in
@@ -128,7 +128,7 @@
           make for an indeterminate amount of inconvenience for the
           developer -- as with regards to  _reusability_ of this
           extension -- such that may be weighed against the merits of
-          the methogolody provided, with this extension, for naming
+          the methodology provided, with this extension, for naming
           and location of system definitions. Although any single
           _methodology_, as of the previous, may be applied as an
           effective _work around_ for systems distributed to _end
@@ -136,7 +136,7 @@
           expected to modify the systems as distributed, in any manner
           that would interfere with any functional applications of the
           specific methodology -- it may seem to amount to an
-          indeterminite uncertainty for applications and application
+          indeterminate uncertainty for applications and application
           developers, moreover as a sort of _virulent_ methodology
           establishing no too certain analogy to Java classpath
           handling, in a contrivance in which _system naming_ becomes
@@ -157,7 +157,7 @@
           innately available of a Java Development Kit -- such as with
           regards to  programmatic security  policies for the Java
           class loader, also as with regards  to _Java archives_, _and
-          so on_. It becomes like a distracting excercise in _rote
+          so on_. It becomes like a distracting exercises in _rote
           tedium_, then, to apply this extension and not resolve the
           concerns introduced of this extension, if those may be
           resolved to any further manner of a pragmatic conclusion. In
@@ -179,13 +179,13 @@
           definitions_ -- though the latter is really a concise
           convention. It is, then, another plainly exasperating
           quality of the effective Common Lisp programming
-          environemnt, moroever another barrier to any -- at least, in
+          environment, moreover another barrier to any -- at least, in
           a _hypothetical_ sense -- any further commercial adoption of
-          this innately non-integrated, remarkably heterogenous heap
+          this innately non-integrated, remarkably heterogeneous heap
           of _software things_ that is become in applications of
-          CLtL2, much to the detriment of any practical resuability.
+          CLtL2, much to the detriment of any practical reusability.
 
-    *   For bootrstrapping the _hieararchical names_ extension,
+    *   For bootrstrapping the _hierarchical names_ extension,
         towards some of its original application:
 
         * The following example will apply a _logical pathname host_
@@ -218,3 +218,14 @@
 [build-init]: https://github.com/lisp/de.setf.utility/blob/master/build-init.lisp
 [atn-parser]: https://github.com/lisp/de.setf.atn-parser
 [cl-xml]: http://de.setf.xml/
+           
+<!--  LocalWords:  hiernames asdf util pathnames ASDF's pathname de
+ -->
+           <!--  LocalWords:  versioning setf filesystem ln hoc asd
+ -->
+           <!--  LocalWords:  centric subdirectories reusability CLtL
+ -->
+           <!--  LocalWords:  classpath codebases bootrstrapping init
+ -->
+           <!--  LocalWords:  atn xml
+ -->
