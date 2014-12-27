@@ -219,13 +219,9 @@
 [atn-parser]: https://github.com/lisp/de.setf.atn-parser
 [cl-xml]: http://de.setf.xml/
            
-<!--  LocalWords:  hiernames asdf util pathnames ASDF's pathname de
- -->
-           <!--  LocalWords:  versioning setf filesystem ln hoc asd
- -->
-           <!--  LocalWords:  centric subdirectories reusability CLtL
- -->
-           <!--  LocalWords:  classpath codebases bootrstrapping init
- -->
-           <!--  LocalWords:  atn xml
- -->
+
+<!--  LocalWords:  hiernames asdf util pathnames ASDF's pathname de -->
+<!--  LocalWords:  versioning setf filesystem ln hoc asd -->
+<!--  LocalWords:  centric subdirectories reusability CLtL -->
+<!--  LocalWords:  classpath codebases bootrstrapping init -->
+<!--  LocalWords:  atn xml -->
