@@ -10,11 +10,11 @@
         [asdf][util-asdf] module of [de.setf.utility][utility] _source
         tree_ -- provides an interface for _hierarchical pathnames_ in
         locating [ASDF][asdf] system
-        definitions, via `asdf:\*system-definition-search-functions\*`.
+        definitions, via `asdf:*system-definition-search-functions*`.
         
     *   Considering that the convention of _hierarchical
         pathnames_ applied in that extension is used throughout the
-        `de.setf.\*` source trees, it may _behoove the application_ of
+        `de.setf.*` source trees, it may _behoove the application_ of
         CL-XML, to apply that extension for [ASDF][asdf]. Notes:
         
         * The _hierarchical pathnames_ extension does not integrate
@@ -134,7 +134,7 @@
           effective _work around_ for systems distributed to _end
           users_  -- such that any single _end user_ would not be
           expected to modify the systems as distributed, in any manner
-          that would interfere with any functional appliations of the
+          that would interfere with any functional applications of the
           specific methodology -- it may seem to amount to an
           indeterminite uncertainty for applications and application
           developers, moreover as a sort of _virulent_ methodology
@@ -185,8 +185,8 @@
           of _software things_ that is become in applications of
           CLtL2, much to the detriment of any practical resuability.
 
-    *   For bootrstrapping the _hieararchical names_ extension, in
-        some of its original appliation:
+    *   For bootrstrapping the _hieararchical names_ extension,
+        towards some of its original application:
 
         * The following example will apply a _logical pathname host_
           `"de.setf.utility"` defined as to translate to the pathname of 
@@ -211,7 +211,7 @@
 
 ...
 
-[utilty]: https://github.com/lisp/de.setf.utility
+[utility]: https://github.com/lisp/de.setf.utility
 [hiernames]: https://github.com/lisp/de.setf.utility/blob/master/asdf/hierarchical-names.lisp
 [util-asdf]: https://github.com/lisp/de.setf.utility/tree/master/asdf
 [asdf]: http://common-lisp.net/project/asdf/
