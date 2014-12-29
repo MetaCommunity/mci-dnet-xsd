@@ -1,3 +1,78 @@
+Notes onto CL-XML
+=================
+
+## Documentation Notes
+
+**CL-XML:** Presently, [de.setf.xml][cl-xml]
+
+## API Notes
+
+### URI Object Model
+
+[CL-XML][cl-xml] may define a URI object model, when the file
+`de.setf.xml/code/base/utils.lisp` is evaluated. However, if
+[CL-HTTP][cl-http] is loaded as would be assumed, when the feature
+`:CL-HTTP` would be defined to the environment's `*features*` list --
+when that file is interpreted, or when the [CL-XML][cl-xml] system
+definition is interpreted -- then [CL-XML][cl-xml] will use the URI
+object model provided by [CL-HTTP][cl-http].
+
+See also:
+* `xml-utils::|rfc1738|`
+
+### XML Proccessing
+
+The generic function `XMLP:DOCUMENT-PARSER` is defined by CL-XML. This
+function serves as a generic interface for processing of XML
+documents, regardless of whether contained in a stream, or in a
+resource denoted by a URI, or within a string or other vector.
+
+**Caveats**
+* Method `XMLP:DOCUMENT-PARSER (STRING &REST T)`
+    * A _system-supplied primary method_
+    * If `STRING` begins with the character `#\<` at position 0 in the
+      string, then the string will be interpreted as it containing XML
+      markup.
+    * Otherwise, the string will be interpreted as a URI.
+* Method `XMLP:DOCUMENT-PARSER (STREAM &REST T &KEY ... &ALLOW-OTHER-KEYS ...)`
+    * This is the "Workhorse method" specialized onto `XMLP:DOCUMENT-PARSER`
+
+
+* _**Notes**_
+    * Documentation about the [CL-XML][cl-xml] native XML processing
+      API may be produced automatically. If the following forms
+      would be _advised_ when [CL-XML][cl-xml] is _compiled_, it would
+      serve to to allow for an automatic listing of _generic
+      functions_ applied within the [CL-XML][cl-xml] native XML processing
+      API:
+        * one of:
+            * `XML-UTILS::MAKE-CONSTRUCTOR-NAME`, or...
+            * all of (external symbols in `xml-utils`)
+                * `defAlternativeConstructor`
+                * `defConstantConstructor`
+                * `defConstructor`
+                * `defConstructorMethod`
+                * `defIdentityConstructor`
+                * `defLiteralConstructor`
+                * `defNullConstructor`
+                * `defTokenConstructor`
+                * `defTokenConstructors`
+        * and (external symbols in `xml-utils`)
+            * `defTokens`
+    * Considering application of the [ATN-Parser][atn-parser] system
+      within [CL-XML][cl-xml], as specifically for XML document
+      processing, refer to `"xml:code;xparser;"` --
+      specifically `"xml:code;xparser;grammar;xml-grammar.lisp"` -- as
+      well as `"xml:bnf;xml-grammar.bnf"`
+
+## Packages and Namespaces
+
+* ...
+
+## Behaviors Non-Normative to Conventional ASDF Systems
+
+* FASL files are generated under `"xml:bin;"`
+
 
 ## Source Trees
 
@@ -46,7 +121,8 @@
               for `D = de`, `E = setf`, `F = utility` and an arbitrary
               `C` such that `C` would be referenced as an element of
               `asdf:*central-registry*`. (It is assumed, in this
-              example, that a file `A/B/B.asd` exists)
+              example, that a file `A/B/B.asd` exists) _This is the
+              approach that will be applied in the MCi-DNet projects_
 
             * The pathname resolution conventions applied in the
               _hierarchical pathnames_ extension would essentially
@@ -98,7 +174,7 @@
           `register-bar` may be defined, such that would search for
           system definitions within the directory `A.B.C/` and its
           subdirectories, and would register each system for its
-          appropriate name, within `asdf:*source-registry*`. If -- in
+          appropriate name, within `asdf/source-registry:*source-registry*`. If -- in
           that methodology -- if there might be some concerns as with
           regards to when a system `A.B.C.D` would be defined in a
           file named `D.asd` rather than `A.B.C.D.asd` ... then,
@@ -122,68 +198,6 @@
            would remain synchronized with the registry directory
            `{BAR}`, insofar as with regards to ASDF system definitions
            created under `{FOO}`.
-
-        * In a candid summary of the author's views as with regards
-          to this extension: Altogether, this extension may seem to
-          make for an indeterminate amount of inconvenience for the
-          developer -- as with regards to  _reusability_ of this
-          extension -- such that may be weighed against the merits of
-          the methodology provided, with this extension, for naming
-          and location of system definitions. Although any single
-          _methodology_, as of the previous, may be applied as an
-          effective _work around_ for systems distributed to _end
-          users_  -- such that any single _end user_ would not be
-          expected to modify the systems as distributed, in any manner
-          that would interfere with any functional applications of the
-          specific methodology -- it may seem to amount to an
-          indeterminate uncertainty for applications and application
-          developers, moreover as a sort of _virulent_ methodology
-          establishing no too certain analogy to Java classpath
-          handling, in a contrivance in which _system naming_ becomes
-          inherently confounded with _system pathname resolution_ --
-          and this, if only for a re-use of such existing codebases as
-          would apply such a convention as effectively for encoding of
-          _system relative pathname in system name_ -- furthermore, it
-          introducing an ultimately inconvenient sense of ambiguity to
-          the concept of _system name_ in ASDF. For such a simple 
-          contrivance in _system definition naming and location_, it
-          may seem to _ask too much_, certainly too much to be
-          deemed ultimately _convenient_ for _re-use_ -- though
-          clearly, it is _novel_. In as it reminds of a programming
-          system much pragmatically unlike Common Lisp -- namely, the
-          Java Development Kit -- but it becomes a _novel
-          distraction_, moreover, for the features that this simple
-          extension _does not provide_, in any analogy to features
-          innately available of a Java Development Kit -- such as with
-          regards to  programmatic security  policies for the Java
-          class loader, also as with regards  to _Java archives_, _and
-          so on_. It becomes like a distracting exercises in _rote
-          tedium_, then, to apply this extension and not resolve the
-          concerns introduced of this extension, if those may be
-          resolved to any further manner of a pragmatic conclusion. In
-          the author's point of view: It begs a metaphor like of an
-          _entrenching tool_ -- albeit, perhaps a magical entrenching
-          tool that can be extended to the farthest reaches of the
-          sky, if it were -- but that is nothing of a metaphor the
-          author would wish to apply for a 
-          systems programming task. Ideally, it may be far simpler
-          to use a _flat naming scheme_ for system definitions, and
-          not require  that developers would review any specific
-          extensions to ASDF, whether or not to re-use those same
-          extensions, if to simply re-use an existing software
-          component designed originally as to require the same
-          extensions for ASDF. All of this becomes an unremarkable
-          sidebar, then, as it is clearly not sufficient to apply an
-          existing convention of _flat system names_ for ASDF system 
-          definitions -- insofar as with _some ASDF system
-          definitions_ -- though the latter is really a concise
-          convention. It is, then, another plainly exasperating
-          quality of the effective Common Lisp programming
-          environment, moreover another barrier to any -- at least, in
-          a _hypothetical_ sense -- any further commercial adoption of
-          this innately non-integrated, remarkably heterogeneous heap
-          of _software things_ that is become in applications of
-          CLtL2, much to the detriment of any practical reusability.
 
     *   For bootrstrapping the _hierarchical names_ extension,
         towards some of its original application:
@@ -218,7 +232,7 @@
 [build-init]: https://github.com/lisp/de.setf.utility/blob/master/build-init.lisp
 [atn-parser]: https://github.com/lisp/de.setf.atn-parser
 [cl-xml]: http://de.setf.xml/
-           
+[cl-http]: http://www.cl-http.org:8001/
 
 <!--  LocalWords:  hiernames asdf util pathnames ASDF's pathname de -->
 <!--  LocalWords:  versioning setf filesystem ln hoc asd -->
